@@ -2,7 +2,8 @@ pandas
 numpy
 statsmodels
 torch
-streamlit
+streamlit==1.32.0
+altair==4.2.2
 scipy
 python-dotenv
 groq
