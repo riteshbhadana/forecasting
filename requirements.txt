@@ -1,0 +1,8 @@
+pandas
+numpy
+statsmodels
+torch
+streamlit
+scipy
+python-dotenv
+groq
