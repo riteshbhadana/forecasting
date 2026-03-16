@@ -7,7 +7,7 @@ from dotenv import load_dotenv
 from groq import Groq
 
 from src.preprocessing import create_time_series
-from src.arima import load_model, forecast
+from src.arima import train_arima
 from src.optimization import optimize_usage
 
 # ------------------------
@@ -71,9 +71,17 @@ if uploaded_file is not None:
     # ------------------------
     # Forecast
     # ------------------------
-    model = load_model()
-    pred = forecast(model, 24).round()
+    @st.cache_resource
+    def get_model(ts):
+        return train_arima(ts)
 
+    model = get_model(ts)
+
+    pred = model.forecast(24).round()
+
+    # ------------------------
+    # Optimization
+    # ------------------------
     optimized, before, after, savings = optimize_usage(pred)
 
     forecast_df = pd.DataFrame({
